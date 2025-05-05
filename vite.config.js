@@ -21,6 +21,14 @@ export default defineConfig(({ mode }) => {
     optimizeDeps: {
       include: ['fast-deep-equal'],
     },
+    test: {
+      environment: 'jsdom',
+      globals: true,
+      setupFiles: ['./vitest.setup.ts'],
+      coverage: {
+        reporter: ['text', 'html'],
+      },
+    },
     build: {
       target: 'es2020',
     },

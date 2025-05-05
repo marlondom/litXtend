@@ -1,32 +1,24 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-'use strict';
+import { html } from 'lit-html';
+import XTemplate from './tpl/XTemplate.js';
 
-import { html, render } from 'lit-html'
+const myTpl = new XTemplate((data: { name: string; items: string[] }) => html`
+  <div>
+    <h2>Hello, ${data.name}</h2>
+    <ul>
+      ${data.items.map(item => html`<li>${item}</li>`)}
+    </ul>
+  </div>
+`);
 
-// ################################################### \\
+const data = {
+  name: 'Kai',
+  items: ['Magic', 'Adventure', 'Friendship']
+};
 
-// --------------------------------------------------- \\
-// ------------------- WIDGET ------------------------ \\
-// --------- Pequeno programa informático ------------ \\
-// -------- com funcionalidades específicas ---------- \\
-// --------------------------------------------------- \\
-
-import Button from './litext/widgets/Button';
-
-(function main() {
-  const template = html`
-    <template id='container'></template>
-  `;
-
-  render(template, window.document.body);
-
-  const button = new Button({
-    text: 'Click me',
-    onClick: () => {
-      console.log('Button clicked');
-    },
-  });
-
-  button.renderTo('container');
-})();
+// Ensure the container is not null before calling overwrite
+const container = document.getElementById('app');
+if (container) {
+  myTpl.overwrite(container, data);
+} else {
+  console.error('Container with id "app" not found.');
+}

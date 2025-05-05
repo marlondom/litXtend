@@ -1,16 +1,39 @@
 {
   "compilerOptions": {
-    "checkJs": true,
-    "target": "ES2020",
+    // Define o padrão de JavaScript que será emitido.
+    // ES2020 oferece async/await, BigInt, nullish coalescing, etc.
+    "target": "ES2020",                   
+
+    // Especifica o sistema de módulos; ESNext permite uso de 'import/export' moderno.
     "module": "ESNext",
-    "strict": true,
-    "outDir": "./dist",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "noImplicitAny": false,
-    "noImplicitThis": false
+
+    // Define como os módulos são resolvidos. 'Bundler' é ideal para ferramentas como Vite.
+    "moduleResolution": "Bundler",        
+
+    // Define bibliotecas padrão a serem incluídas.
+    // 'ES2020' fornece recursos modernos do JS, e 'DOM' habilita APIs de navegador (como document, window).
+    "lib": ["ES2020", "DOM"],             
+
+    // Permite interoperabilidade entre módulos CommonJS e ESModules.
+    // Por exemplo, permite fazer: import fs from 'fs'
+    "esModuleInterop": true,              
+
+    // Ativa todas as verificações de tipo mais rigorosas do TypeScript.
+    // Melhora qualidade e segurança do código.
+    "strict": true,                       
+
+    // Diz ao TypeScript para incluir as definições de tipos globais da Vitest.
+    // Evita conflitos com Jest/Mocha e reconhece 'describe', 'it', 'expect', etc.
+    "types": ["vitest/globals"],
+    
+    "typeRoots": ["./types", "./node_modules/@types"]
   },
-  "include": ["src/**/*.ts", "tests/*.test.js"],
-  "exclude": ["node_modules"]
+
+  // Define quais diretórios o TypeScript deve analisar.
+  // 'src' para código-fonte e 'test' para arquivos de teste.
+  "include": ["src", "test", "types", "vitest.setup.ts"],             
+
+  // Exclui diretórios que não devem ser analisados.
+  // 'node_modules' contém dependências já compiladas e não deve ser verificado.
+  "exclude": ["node_modules"]            
 }
