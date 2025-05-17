@@ -15,13 +15,19 @@ it('applyTemplate returns correct HTML string without markers', () => {
 import XTemplate from '../src/tpl/XTemplate';
 
 describe('XTemplate', () => {
-  it('renders correctly into the DOM', () => {
+  it('renders correctly into the DOM', async () => {
     document.body.innerHTML = '<div id="test-container"></div>';
+    const container = document.getElementById('test-container')!;
 
-    const tpl = new XTemplate((data: { name: string }) => html`<p>Hello, ${data.name}</p>`);
-    tpl.overwrite(document.getElementById('test-container')!, { name: 'Kai' });
+    const tpl = new XTemplate(({ name }: { name: string }) =>
+      html`<p>Hello, ${name}</p>`
+    );
 
-    expect(screen.getByText('Hello, Kai')).toBeInTheDocument();
+    tpl.render({ name: 'Kai' }, container);
+
+    // Aguarda o elemento aparecer
+    const result = await screen.findByText('Hello, Kai');
+    expect(result).toBeInTheDocument();
   });
 
   it('applyTemplate returns correct HTML string', () => {
