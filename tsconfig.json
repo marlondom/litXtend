@@ -24,16 +24,24 @@
 
     // Diz ao TypeScript para incluir as definições de tipos globais da Vitest.
     // Evita conflitos com Jest/Mocha e reconhece 'describe', 'it', 'expect', etc.
+    // Para usar globais do vitest nos testes
     "types": ["vitest/globals"],
-    
-    "typeRoots": ["./types", "./node_modules/@types"]
+    "typeRoots": ["./node_modules/@types"],
+
+    // Geração de arquivos de declaração (.d.ts)
+    "declaration": true,
+    "emitDeclarationOnly": true,
+
+    // Diretórios de entrada e saída
+    "rootDir": "src",
+    "outDir": "dist"
   },
 
   // Define quais diretórios o TypeScript deve analisar.
   // 'src' para código-fonte e 'test' para arquivos de teste.
-  "include": ["src", "test", "types", "vitest.setup.ts"],             
+  "include": ["src", "test", "vitest.setup.ts"],             
 
   // Exclui diretórios que não devem ser analisados.
   // 'node_modules' contém dependências já compiladas e não deve ser verificado.
-  "exclude": ["node_modules"]            
+  "exclude": ["node_modules"]
 }

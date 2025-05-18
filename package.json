@@ -4,18 +4,23 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "check": "npm outdated --long",
+    "upgrade": "ncu -u && npm install",
     "dev": "vite",
     "dev:debug": "vite --debug",
-    "build": "rm -rf node_modules/.vite node_modules/.cache dist && npm install && tsc && vite build",
-    "preview": "vite preview",
-    "coverage": "vitest run --coverage",
-    "lint": "eslint ./src --fix && eslint ./mocks --fix",
-    "i:legacy": "npm install --legacy-peer-deps",
-    "check": "npm outdated --long",
     "start": "npm run dev",
     "start:debug": "node --inspect=0.0.0.0:35003 node_modules/vite/bin/vite.js",
-    "test":"vitest",
-    "test:coverage": "vitest run --coverage"
+
+    "lint": "eslint ./src --fix && eslint ./mocks --fix",
+
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "coverage": "vitest run --coverage",
+
+    "build:types": "tsc --project tsconfig.build.json",
+    "clean": "rm -rf dist node_modules/.vite node_modules/.cache",
+    "build": "npm run clean && vite build && npm run build:types",
+    "preview": "vite preview"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",
