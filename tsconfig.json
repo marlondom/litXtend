@@ -28,6 +28,9 @@
     "types": ["vitest/globals"],
     "typeRoots": ["./node_modules/@types"],
 
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false,
+
     // Geração de arquivos de declaração (.d.ts)
     "declaration": true,
     "emitDeclarationOnly": true,
