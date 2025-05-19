@@ -13,7 +13,7 @@ process.on('unhandledRejection', (reason, promise) => {
 export default defineConfig(({ mode }) => {
   // eslint-disable-next-line no-undef
   const env = { ...process.env, ...loadEnv(mode, process.cwd(), '') };
-  env.APP_NAME = env.APP_NAME ?? 'store-test';
+  env.APP_NAME = env.APP_NAME ?? 'litext';
 
   return {
     base: mode === 'production' ? `/${env.APP_NAME}/` : './',

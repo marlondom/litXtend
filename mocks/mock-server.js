@@ -17,8 +17,8 @@ app.use('/mock', mockRouter);
 users.loadRoutes(mockRouter);
 
 // ** 404
-mockRouter.all('*', (_, res) => {
-  res.status(404).end();
+mockRouter.use((req, res) => {
+  res.status(404).send('Página não encontrada');
 });
 
 export default app;
