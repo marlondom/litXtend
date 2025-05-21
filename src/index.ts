@@ -1,6 +1,9 @@
 // import { html } from 'lit-html';
 // import XTemplate from './tpl/XTemplate.js';
 
+// import ExtButton from "./components/ExtButton";
+// import ExtContainer from "./layout/ExtContainer";
+
 // const myTpl = new XTemplate((data: { name: string; items: string[] }) => html`
 //   <div>
 //     <h2>Hello, ${data.name}</h2>
@@ -38,20 +41,61 @@
 
 // ----------------------------------------------------------------
 
-import { ExtButton } from './components/ExtButton';
+// import { ExtButton } from './components/ExtButton';
+// import './styles/ext-button.styl';
+
+
+// const firstButton = new ExtButton({
+//   renderTo: document.body,
+//   text: 'Clique aqui',
+//   onClick: () => alert('Botão clicado!'),
+// });
+
+// const secondButton = new ExtButton({
+//   renderTo: document.body,
+//   text: 'Clique aqui',
+//   onClick: () => firstButton.setText('Botão clicado!'),
+// });
+
+// ----------------------------------------------------------------
+
+// new ExtContainer({
+//   renderTo: document.body,
+//   layout: 'hbox',
+//   items: [
+//     new ExtButton({ text: 'Salvar' }),
+//     new ExtButton({ text: 'Cancelar' })
+//   ]
+// });
+
+// ----------------------------------------------------------------
+
+import './styles/ext-panel.styl';
+import './styles/ext-container.styl';
 import './styles/ext-button.styl';
 
+import { ExtPanel } from './components/ExtPanel';
+import { ExtButton } from './components/ExtButton';
 
-const firstButton = new ExtButton({
-  renderTo: document.body,
-  text: 'Clique aqui',
-  onClick: () => alert('Botão clicado!'),
+// Cria dois botões
+const saveBtn = new ExtButton({
+  renderTo: document.createElement('div'), // será movido
+  text: 'Salvar',
+  onClick: () => alert('Salvo com sucesso!')
 });
 
-const secondButton = new ExtButton({
-  renderTo: document.body,
-  text: 'Clique aqui',
-  onClick: () => firstButton.setText('Botão clicado!'),
+const cancelBtn = new ExtButton({
+  renderTo: document.createElement('div'), // será movido
+  text: 'Cancelar',
+  onClick: () => alert('Cancelado.')
 });
 
-
+// Cria o painel com os botões dentro
+new ExtPanel({
+  renderTo: document.body,
+  title: 'Formulário de Ação',
+  layout: 'vbox',
+  align: 'center',
+  justify: 'center',
+  items: [saveBtn, cancelBtn]
+});

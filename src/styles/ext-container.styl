@@ -1,0 +1,38 @@
+.ext-container
+  display: flex
+  gap: 8px
+
+.layout-hbox
+  flex-direction: row
+
+.layout-vbox
+  flex-direction: column
+
+// Controle de alinhamento horizontal e vertical
+.ext-container[align="start"]
+  align-items: flex-start
+
+.ext-container[align="center"]
+  align-items: center
+
+.ext-container[align="end"]
+  align-items: flex-end
+
+.ext-container[justify="start"]
+  justify-content: flex-start
+
+.ext-container[justify="center"]
+  justify-content: center
+
+.ext-container[justify="end"]
+  justify-content: flex-end
+
+.ext-container[justify="space-between"]
+  justify-content: space-between
+
+.ext-container[justify="space-around"]
+  justify-content: space-around
+
+// Grow dos filhos (item flexível)
+.ext-grow
+  flex: 1 1 auto
