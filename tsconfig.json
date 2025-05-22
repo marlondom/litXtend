@@ -24,8 +24,6 @@
 
     // Diz ao TypeScript para incluir as definições de tipos globais da Vitest.
     // Evita conflitos com Jest/Mocha e reconhece 'describe', 'it', 'expect', etc.
-    // Para usar globais do vitest nos testes
-    "types": ["vitest/globals"],
     "typeRoots": ["./node_modules/@types"],
 
     "experimentalDecorators": true,

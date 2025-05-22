@@ -1,11 +1,16 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "types": [],
     "declaration": true,
     "emitDeclarationOnly": true,
     "outDir": "dist"
   },
   "include": ["src"],
-  "exclude": ["test", "**/*.test.ts", "vitest.setup.ts"]
+  "exclude": [
+    "**/*.spec.ts",
+    "**/*.test.ts",
+    "test",
+    "vitest.setup.ts",
+    "node_modules"
+  ]
 }
