@@ -1,3 +1,8 @@
+// src/styles/ext-container.styl
+
+// ----------------------------------------
+// Layout básico e container
+// ----------------------------------------
 .ext-container
   display: flex
   gap: 8px
@@ -8,7 +13,63 @@
 .layout-vbox
   flex-direction: column
 
-// Controle de alinhamento horizontal e vertical
+// ----------------------------------------
+// Layout fit
+// ----------------------------------------
+.layout-fit
+  position: relative
+  > *
+    position: absolute
+    inset: 0
+
+// ----------------------------------------
+// Layout border e regiões
+// ----------------------------------------
+.layout-border
+  position: relative
+  display: block
+
+  > .region-north,
+  > .region-south
+    position: absolute
+    left: 0
+    right: 0
+    height: auto
+
+  > .region-north
+    top: 0
+
+  > .region-south
+    bottom: 0
+
+  > .region-west,
+  > .region-east
+    position: absolute
+    top: 0
+    bottom: 0
+    width: auto
+
+  > .region-west
+    left: 0
+
+  > .region-east
+    right: 0
+
+  > .region-center
+    position: absolute
+    top: 0
+    bottom: 0
+    left: 0
+    right: 0
+    z-index: 0
+
+  > .region-west,
+  > .region-center
+    padding: 8px
+    box-sizing: border-box
+// ----------------------------------------
+// Alinhamento e justificação
+// ----------------------------------------
 .ext-container[align="start"]
   align-items: flex-start
 
@@ -33,6 +94,51 @@
 .ext-container[justify="space-around"]
   justify-content: space-around
 
-// Grow dos filhos (item flexível)
+// ----------------------------------------
+// Grow (flex item)
+// ----------------------------------------
 .ext-grow
   flex: 1 1 auto
+
+// ----------------------------------------
+// Colapsável e splitter
+// ----------------------------------------
+.collapsed
+  display: none
+
+.collapse-toggle
+  background: #ddd
+  border-radius: 4px
+  padding: 2px
+  font-size: 1rem
+  line-height: 1
+  width: 1.5rem
+  height: 1.5rem
+  display: flex
+  align-items: center
+  justify-content: center
+
+.splitter
+  position: absolute
+  background: #ccc
+  opacity: 0.5
+  z-index: 10
+  cursor: ew-resize
+
+  &.horizontal
+    height: 5px
+    width: 100%
+    cursor: ns-resize
+
+  &.vertical
+    width: 5px
+    height: 100%
+    cursor: ew-resize
+
+// ----------------------------------------
+// Responsividade (mobile)
+// ----------------------------------------
+@media (max-width: 600px)
+  .layout-border > .region-west,
+  .layout-border > .region-east
+    display: none
