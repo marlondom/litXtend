@@ -1,7 +1,9 @@
+// npx vitest run src/dom/DomHelper.spec.ts
+
 import { describe, it, expect, beforeEach } from 'vitest';
 import { html } from 'lit-html';
 import { stripExpressionMarkers } from '@lit-labs/testing';
-import { DomHelper } from '../src/dom/DomHelper';
+import { DomHelper } from './DomHelper';
 
 describe('DomHelper', () => {
   let container: HTMLElement;

@@ -20,6 +20,13 @@ export default class XTemplate<TContext = unknown> {
   }
 
   /**
+   * Retorna o TemplateResult gerado com o contexto atual
+   */
+  getTemplate(context: TContext): TemplateResult {
+    return this.templateFn(context);
+  }
+
+  /**
    * renderToString ainda não implementado (requere lit-ssr)
    */
   renderToString(_context: TContext): string {
