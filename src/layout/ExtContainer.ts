@@ -26,6 +26,7 @@ interface ExtContainerConfig {
 export class ExtContainer extends ExtComponent {
   private layoutType: 'hbox' | 'vbox' | 'fit' | 'border';
   private items: (ExtComponent | HTMLElement | BorderItem)[];
+  private regions: Partial<Record<BorderItem['region'], BorderItem>> = {};
 
   constructor(config: ExtContainerConfig) {
     super({ renderTo: config.renderTo });
@@ -35,6 +36,7 @@ export class ExtContainer extends ExtComponent {
 
     this.el.classList.add('ext-container');
     this.el.classList.add(`layout-${this.layoutType}`);
+    this.el.style.position = 'relative';
 
     if (config.align) {
       this.el.setAttribute('align', config.align);
@@ -50,18 +52,13 @@ export class ExtContainer extends ExtComponent {
 
   render(): void {
     this.el.innerHTML = '';
+    this.regions = {};
 
-    if (this.layoutType === 'fit') {
-      const item = this.items[0];
-      if (item instanceof ExtComponent) {
-        this.el.appendChild(item.el);
-      } else if (item instanceof HTMLElement) {
-        this.el.appendChild(item);
-      }
-    } else if (this.layoutType === 'border') {
+    if (this.layoutType === 'border') {
       for (const item of this.items) {
         if (typeof item === 'object' && 'region' in item && item.el instanceof HTMLElement) {
           item.el.classList.add(`region-${item.region}`);
+          this.regions[item.region] = item;
 
           if (item.collapsible) {
             const toggleBtn = document.createElement('button');
@@ -71,6 +68,7 @@ export class ExtContainer extends ExtComponent {
               item.collapsed = !item.collapsed;
               item.el.classList.toggle('collapsed', item.collapsed);
               toggleBtn.textContent = item.collapsed ? '➕' : '➖';
+              this.reflowLayout();
             });
             item.el.prepend(toggleBtn);
           }
@@ -89,6 +87,7 @@ export class ExtContainer extends ExtComponent {
           }
         }
       }
+      this.reflowLayout();
     } else {
       for (const item of this.items) {
         if (item instanceof ExtComponent) {
@@ -102,6 +101,85 @@ export class ExtContainer extends ExtComponent {
     if (!this.renderTo.contains(this.el)) {
       this.renderTo.appendChild(this.el);
     }
+  }
+
+  private applyBorderLayout() {
+    const containerWidth = this.el.clientWidth;
+    const containerHeight = this.el.clientHeight;
+
+    let top = 0;
+    let bottom = 0;
+    let left = 0;
+    let right = 0;
+
+    const { north, south, west, east, center } = this.regions;
+
+    if (north && !north.collapsed) {
+      const h = north.el.offsetHeight;
+      Object.assign(north.el.style, {
+        position: 'absolute',
+        top: '0px',
+        left: '0px',
+        right: '0px',
+        height: `${h}px`
+      });
+      top += h;
+    }
+
+    if (south && !south.collapsed) {
+      const h = south.el.offsetHeight;
+      Object.assign(south.el.style, {
+        position: 'absolute',
+        bottom: '0px',
+        left: '0px',
+        right: '0px',
+        height: `${h}px`
+      });
+      bottom += h;
+    }
+
+    if (west && !west.collapsed) {
+      let w = west.el.offsetWidth;
+      west.el.style.width = `${w}px`;
+      w = parseInt(west.el.style.width || '0', 10);
+      if (!w) {
+        w = 100; // fallback padrão para 100 se width não definido
+      }
+      Object.assign(west.el.style, {
+        position: 'absolute',
+        top: `${top}px`,
+        bottom: `${bottom}px`,
+        left: '0px',
+        width: `${w}px`
+      });
+      left += w;
+    }
+
+    if (east && !east.collapsed) {
+      const w = east.el.offsetWidth;
+      Object.assign(east.el.style, {
+        position: 'absolute',
+        top: `${top}px`,
+        bottom: `${bottom}px`,
+        right: '0px',
+        width: `${w}px`
+      });
+      right += w;
+    }
+
+    if (center) {
+      Object.assign(center.el.style, {
+        position: 'absolute',
+        top: `${top}px`,
+        bottom: `${bottom}px`,
+        left: `${left}px`,
+        right: `${right}px`
+      });
+    }
+  }
+
+  private reflowLayout() {
+    this.applyBorderLayout();
   }
 
   private initSplit(e: MouseEvent, item: BorderItem) {
@@ -125,6 +203,7 @@ export class ExtContainer extends ExtComponent {
         if (item.maxHeight) newHeight = Math.min(newHeight, item.maxHeight);
         item.el.style.height = `${newHeight}px`;
       }
+      this.reflowLayout();
     };
 
     const onMouseUp = () => {

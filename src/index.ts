@@ -59,6 +59,8 @@ const fitContainer = new ExtContainer({
   ]
 });
 
+// ---------------------------------------------------------------------------------------------------
+
 const borderWrapper = createWrapper('Border Layout');
 borderWrapper.style.height = '300px';
 borderWrapper.style.position = 'relative';
@@ -66,22 +68,10 @@ borderWrapper.style.position = 'relative';
 const westPanel = document.createElement('div');
 westPanel.textContent = 'West Panel';
 westPanel.style.background = '#eee';
-westPanel.style.width = '100px';
-westPanel.style.minWidth = '50px';
-westPanel.style.height = '100%';
-westPanel.style.position = 'absolute';
-westPanel.style.top = '0';
-westPanel.style.bottom = '0';
-westPanel.style.left = '0';
 
 const centerPanel = document.createElement('div');
 centerPanel.textContent = 'Center Panel';
 centerPanel.style.background = '#ddd';
-centerPanel.style.position = 'absolute';
-centerPanel.style.top = '0';
-centerPanel.style.bottom = '0';
-centerPanel.style.left = '100px'; // começa depois do westPanel
-centerPanel.style.right = '0';
 
 const borderContainer = new ExtContainer({
   renderTo: borderWrapper,
@@ -91,6 +81,9 @@ const borderContainer = new ExtContainer({
     { region: 'center', el: centerPanel }
   ]
 });
+borderContainer.el.style.height = '80%';
+
+// ---------------------------------------------------------------------------------------------------
 
 const panelWrapper = createWrapper('Panel');
 
